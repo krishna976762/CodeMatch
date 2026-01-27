@@ -1,0 +1,14 @@
+{
+  "name": "codematch-backend",
+  "version": "1.0.0",
+  "description": "Where Code Meets Connection",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "author": "krishna bokefod",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
