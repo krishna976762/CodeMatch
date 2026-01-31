@@ -1,8 +1,16 @@
 const express = require("express");
 const connectDB = require("./config/database");
+const cors= require("cors")
 const app = express();
+const corsOptions = {
+  origin: "http://localhost:5173", // your frontend
+  credentials: true,               // allow cookies / Authorization headers
+};
+
+app.use(cors(corsOptions));
 const Users = require("./models/Users");
 app.use(express.json());
+
 
 const authRoute = require("./routes/auth")
 const profileRouter = require("./routes/profile")

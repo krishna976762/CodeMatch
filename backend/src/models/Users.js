@@ -81,19 +81,19 @@ const userSchema = new mongoose.Schema(
 //
 // 👉 Default photo based on gender
 //
-userSchema.pre("save", function (next) {
-  if (!this.photoUrl) {
-    if (this.gender === "female") {
-      this.photoUrl =
-        "https://static.vecteezy.com/system/resources/previews/042/332/098/non_2x/default-avatar-profile-icon-grey-photo-placeholder-female-no-photo-images-for-unfilled-user-profile-greyscale-illustration-for-socail-media-web-vector.jpg";
-    } else {
-      // male OR gender not provided
-      this.photoUrl =
-        "https://cdn.vectorstock.com/i/500p/96/77/blank-grey-scale-profile-picture-placeholder-vector-51589677.jpg";
-    }
-  }
-  next();
-});
+// userSchema.pre("save", function (next) {
+//   if (!this.photoUrl) {
+//     if (this.gender === "female") {
+//       this.photoUrl =
+//         "https://static.vecteezy.com/system/resources/previews/042/332/098/non_2x/default-avatar-profile-icon-grey-photo-placeholder-female-no-photo-images-for-unfilled-user-profile-greyscale-illustration-for-socail-media-web-vector.jpg";
+//     } else {
+//       // male OR gender not provided
+//       this.photoUrl =
+//         "https://cdn.vectorstock.com/i/500p/96/77/blank-grey-scale-profile-picture-placeholder-vector-51589677.jpg";
+//     }
+//   }
+//   next();
+// });
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

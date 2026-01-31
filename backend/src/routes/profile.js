@@ -38,7 +38,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
 
     res.status(200).json({
       message: `${loggedInUser.firstName} profile updated successfuly`,
-      user: loggedInUser,
+      data: loggedInUser,
     });
 
   } catch (error) {
@@ -52,7 +52,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
 profileRouter.get("/profile/view",userAuth,async(req,res)=>{
   try {
     const user=req.user;
-    res.send(user)
+    res.json({data:user})
   } catch (error) {
     res.status(400).send("ERROR: ",error.message)
   }

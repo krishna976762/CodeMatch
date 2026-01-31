@@ -15,17 +15,23 @@ authRoute.post("/signup", async (req, res) => {
     validationSignUpData(req);
 
     // 2️⃣ Destructure needed fields
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, age, gender, about, skills, photoUrl } = req.body;
+
 
     // 3️⃣ Hash the password
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // 4️⃣ Create new user instance
+    // 4️⃣ Create new user instance with all fields
     const newUser = new Users({
       firstName,
       lastName,
       email,
       password: passwordHash,
+      age,
+      gender,
+      about,
+      skills,
+      photoUrl
     });
 
     // 5️⃣ Save user to DB
@@ -34,10 +40,14 @@ authRoute.post("/signup", async (req, res) => {
     // 6️⃣ Send success response
     res.status(201).json({
       message: "User created successfully",
-      user: {
+      data: {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         email: newUser.email,
+        age: newUser.age,
+        gender: newUser.gender,
+        about: newUser.about,
+        skills: newUser.skills,
         photoUrl: newUser.photoUrl,
       },
     });
@@ -46,6 +56,7 @@ authRoute.post("/signup", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 authRoute.post("/login", async (req, res) => {
   try {
@@ -78,7 +89,7 @@ authRoute.post("/login", async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
     res.cookie("token",token,{httpOnly:true})
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ message: "Login successful",data:user });
   } catch (error) {
     res.status(400).send("ERROR: " + error.message);
   }
