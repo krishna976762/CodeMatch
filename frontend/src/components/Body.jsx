@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
@@ -44,7 +44,7 @@ const Body = () => {
         : {}
     }
   >
-    <NavBar />
+    <Navbar />
 
     {isGuest && isHomePage ? (
       <Hero />
