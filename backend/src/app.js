@@ -3,7 +3,7 @@ const connectDB = require("./config/database");
 const cors= require("cors")
 const app = express();
 const corsOptions = {
-  origin: "http://localhost:5173", // your frontend
+  origin: "http://localhost:5174", // your frontend
   credentials: true,               // allow cookies / Authorization headers
 };
 
