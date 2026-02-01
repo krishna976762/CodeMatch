@@ -79,7 +79,7 @@ authRoute.post("/login", async (req, res) => {
     }
 
     // ✅ Generate JWT
-    const token = jwt.sign({ _id: user._id }, "Krishna@8080", { expiresIn: "1d" });
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     // ✅ Set JWT in cookie
     res.cookie("token", token, {

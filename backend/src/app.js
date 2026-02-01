@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config() 
 const connectDB = require("./config/database");
 const cors= require("cors")
 const app = express();
@@ -25,7 +26,7 @@ app.use("/",userRouter)
 connectDB()
   .then(() => {
     console.log("Database is established...");
-    app.listen(8080, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Port listening on 8080");
     });
   })
