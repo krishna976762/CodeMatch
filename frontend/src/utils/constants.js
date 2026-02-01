@@ -1,1 +1,4 @@
-export const BASE_URL = "http://3.109.212.53/api"
+export const BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "/api";
