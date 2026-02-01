@@ -9,6 +9,7 @@
   "author": "krishna bokefod",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.967.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
