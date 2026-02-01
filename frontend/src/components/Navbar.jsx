@@ -5,8 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 import { useState, useEffect } from "react";
  
-const Navbar = () => {
-  console.log("")
+const Navbar = () => { 
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const Navbar = () => {
   return (
     <>
       {/* Navbar */}
-      <div className="Navbar bg-black/40 backdrop-blur-md px-6 z-50">
+      <div className="Navbar bg-black/40 backdrop-blur-md px-6 z-50 flex items-center justify-between">
         <div className="flex-1">
           <Link to="/" className="flex items-center gap-2 text-white">
             <span className="text-xl">{"< ❤️ >"}</span>
