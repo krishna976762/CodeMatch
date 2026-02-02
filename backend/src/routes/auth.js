@@ -1,13 +1,14 @@
-const express = require("express")
-const bcrypt = require("bcrypt")
-const jwt= require("jsonwebtoken")
-const cookieParser = require("cookie-parser")
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const Users = require("../models/Users");
+const sendEmail = require("../utils/sendEmail");
 
-const {validationSignUpData} = require("../utils/validation");
+const { validationSignUpData } = require("../utils/validation");
 
-const authRoute = express.Router()
-authRoute.use(cookieParser())
+const authRoute = express.Router();
+authRoute.use(cookieParser());
 
 authRoute.post("/signup", async (req, res) => {
   try {
@@ -15,8 +16,17 @@ authRoute.post("/signup", async (req, res) => {
     validationSignUpData(req);
 
     // 2️⃣ Destructure needed fields
-    const { firstName, lastName, email, password, age, gender, about, skills, photoUrl } = req.body;
-
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      age,
+      gender,
+      about,
+      skills,
+      photoUrl,
+    } = req.body;
 
     // 3️⃣ Hash the password
     const passwordHash = await bcrypt.hash(password, 10);
@@ -31,7 +41,7 @@ authRoute.post("/signup", async (req, res) => {
       gender,
       about,
       skills,
-      photoUrl
+      photoUrl,
     });
 
     // 5️⃣ Save user to DB
@@ -51,12 +61,15 @@ authRoute.post("/signup", async (req, res) => {
         photoUrl: newUser.photoUrl,
       },
     });
+    await sendEmail.sendSignupEmail({
+      userName: newUser.firstName,
+      email: newUser.email,
+    });
   } catch (err) {
     // 7️⃣ Handle validation & DB errors
     res.status(400).json({ error: err.message });
   }
 });
-
 
 authRoute.post("/login", async (req, res) => {
   try {
@@ -79,25 +92,27 @@ authRoute.post("/login", async (req, res) => {
     }
 
     // ✅ Generate JWT
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
     // ✅ Set JWT in cookie
     res.cookie("token", token, {
-      httpOnly: true,      // JS cannot read the cookie
-      secure: false,       // true if using HTTPS
-      sameSite: "lax",     // adjust for frontend if needed
+      httpOnly: true, // JS cannot read the cookie
+      secure: false, // true if using HTTPS
+      sameSite: "lax", // adjust for frontend if needed
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
-    res.cookie("token",token,{httpOnly:true})
-    res.status(200).json({ message: "Login successful",data:user });
+    res.cookie("token", token, { httpOnly: true });
+    res.status(200).json({ message: "Login successful", data: user });
   } catch (error) {
     res.status(400).send("ERROR: " + error.message);
   }
 });
 
-authRoute.post("/logout",async(req,res)=>{
-res.cookie("token",null,{expires: new Date(Date.now())})
-res.send("Logout successfuly")
-})
+authRoute.post("/logout", async (req, res) => {
+  res.cookie("token", null, { expires: new Date(Date.now()) });
+  res.send("Logout successfuly");
+});
 
-module.exports=authRoute;
+module.exports = authRoute;
