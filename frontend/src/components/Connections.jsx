@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/conectionSlice";
 import NoRequests from "./NoRequests";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
@@ -12,10 +13,9 @@ const Connections = () => {
 
   const fetchConnections = async () => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/user/connections`,
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${BASE_URL}/user/connections`, {
+        withCredentials: true,
+      });
       dispatch(addConnections(res.data.data));
     } catch (err) {
       console.log(err);
@@ -40,15 +40,8 @@ const Connections = () => {
 
       <div className="space-y-6">
         {connections.map((connection) => {
-          const {
-            _id,
-            firstName,
-            lastName,
-            photoUrl,
-            age,
-            gender,
-            about,
-          } = connection;
+          const { _id, firstName, lastName, photoUrl, age, gender, about } =
+            connection;
 
           return (
             <div
@@ -72,11 +65,13 @@ const Connections = () => {
                 />
 
                 {/* Love indicator */}
-                <span className="
+                <span
+                  className="
                   absolute -bottom-1 -right-1
                   bg-pink-500 text-white text-xs
                   px-2 py-1 rounded-full
-                ">
+                "
+                >
                   💖
                 </span>
               </div>
@@ -99,7 +94,6 @@ const Connections = () => {
                   "
                 >
                   {firstName} {lastName}
-
                   <span
                     className="
                       opacity-0 scale-50
@@ -125,9 +119,9 @@ const Connections = () => {
                 )}
 
                 {/* About */}
-{about && (
-  <p
-    className="
+                {about && (
+                  <p
+                    className="
       group/about
       relative mt-4
       text-gray-300 text-sm leading-relaxed
@@ -135,12 +129,12 @@ const Connections = () => {
       hover:text-white
       hover:drop-shadow-[0_0_12px_rgba(236,72,153,0.45)]
     "
-  >
-    {about}
+                  >
+                    {about}
 
-    {/* tiny floating heart */}
-    <span
-      className="
+                    {/* tiny floating heart */}
+                    <span
+                      className="
         absolute -top-2 -right-2
         text-[12px]
         opacity-0 scale-75
@@ -148,12 +142,14 @@ const Connections = () => {
         group-hover/about:scale-100
         transition-all duration-300
       "
-    >
-      💖
-    </span>
-  </p>
-)}
-
+                    >
+                      💖
+                    </span>
+                  </p>
+                )}
+                <Link to={"/chat/" + _id}>
+                  <button className="btn btn-primary">Chat</button>
+                </Link>
               </div>
             </div>
           );

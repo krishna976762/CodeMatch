@@ -74,6 +74,10 @@ const userSchema = new mongoose.Schema(
       default: "This is default value",
       maxlength: [300, "About section cannot exceed 300 characters"],
     },
+    lastSeen: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );

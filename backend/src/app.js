@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require("http")
 require("dotenv").config() 
 const connectDB = require("./config/database");
 const cors= require("cors")
@@ -16,17 +17,21 @@ app.use(express.json());
 const authRoute = require("./routes/auth")
 const profileRouter = require("./routes/profile")
 const requestRouter = require("./routes/request")
-const userRouter = require("./routes/users")
+const userRouter = require("./routes/users");
+const ChatRouter = require("./routes/chat")
+const initializeSocket = require("./utils/socket");
 app.use("/",authRoute)
 app.use("/",profileRouter)
 app.use("/",requestRouter)
 app.use("/",userRouter)
+app.use("/",ChatRouter)
 
-
+const server = http.createServer(app)
+initializeSocket(server)
 connectDB()
   .then(() => {
     console.log("Database is established...");
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
       console.log("Port listening on 8080");
     });
   })
