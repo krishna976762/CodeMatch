@@ -2,7 +2,7 @@ export const formatLastSeen = (lastSeen) => {
   if (!lastSeen) return null; 
 
   const lastSeenDate = new Date(lastSeen);
-  const now = new Date();
+  const now = new Date(); 
   const diffMs = now - lastSeenDate; 
 
   const diffSeconds = Math.floor(diffMs / 1000);

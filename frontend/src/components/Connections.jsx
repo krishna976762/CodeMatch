@@ -148,8 +148,25 @@ const Connections = () => {
                   </p>
                 )}
                 <Link to={"/chat/" + _id}>
-                  <button className="btn btn-primary">Chat</button>
-                </Link>
+  <button
+    className="
+      mt-5
+      flex items-center gap-2
+      px-6 py-2.5
+      rounded-full
+      bg-gradient-to-r from-pink-500 to-rose-500
+      text-white font-semibold tracking-wide
+      shadow-lg shadow-pink-500/30
+      hover:shadow-pink-500/50
+      hover:scale-105
+      active:scale-95
+      transition-all duration-300
+    "
+  >
+    💬 Chat
+  </button>
+</Link>
+
               </div>
             </div>
           );
